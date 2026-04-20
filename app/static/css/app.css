@@ -16,7 +16,7 @@ body,
 }
 
 body {
-    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-family: "JetBrains Mono", monospace;
     color: var(--color-charcoal);
     background: linear-gradient(140deg, #e8f2ef 0%, #dce9e4 45%, #eff2ec 100%);
     -webkit-tap-highlight-color: transparent;
@@ -312,7 +312,6 @@ button:disabled {
 }
 
 .animate-entrance {
-    opacity: 0;
     animation: entrance 500ms ease-out forwards;
 }
 
@@ -361,5 +360,11 @@ button:disabled {
 
     .cta-button {
         transition: none;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .animate-entrance {
+        opacity: 0;
     }
 }
