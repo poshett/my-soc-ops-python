@@ -1,25 +1,88 @@
 <div id="game-container">
-<div class="flex flex-col items-center justify-center min-h-full p-6 bg-gray-50">
-    <div class="text-center max-w-sm">
-        <h1 class="text-4xl font-bold text-gray-900 mb-2">Soc Ops</h1>
-        <p class="text-lg text-gray-600 mb-8">Social Bingo</p>
+    <div class="start-screen-shell">
+        <section class="hero-section">
+            <div class="container">
+                <h1 class="hero-title animate-entrance">Soc Ops</h1>
+                <p class="hero-subtitle animate-entrance animation-delay-100">Social Bingo</p>
+                <p class="hero-tagline animate-entrance animation-delay-200">
+                    A social game to connect with people around you. Read questions. Find matches. Get five in a row to win.
+                </p>
+            </div>
+        </section>
 
-        <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200 mb-8">
-            <h2 class="font-semibold text-gray-800 mb-3">How to play</h2>
-            <ul class="text-left text-gray-600 text-sm space-y-2">
-                <li>• Find people who match the questions</li>
-                <li>• Tap a square when you find a match</li>
-                <li>• Get 5 in a row to win!</li>
-            </ul>
-        </div>
+        <section class="content-section">
+            <h2 class="section-title animate-entrance animation-delay-300">Try it out</h2>
+            <p class="section-subtitle animate-entrance animation-delay-350">
+                Click the squares below to see how it works:
+            </p>
 
-        <button
-            hx-post="/start"
-            hx-target="#game-container"
-            hx-swap="outerHTML"
-            class="w-full bg-accent text-white font-semibold py-4 px-8 rounded-lg text-lg active:bg-accent-light transition-colors">
-            Start Game
-        </button>
+            <div class="preview-board-container animate-entrance animation-delay-400">
+                <div class="preview-board" aria-label="Interactive bingo board preview">
+                    <div class="preview-square" data-square-id="0" role="button" tabindex="0" aria-pressed="false">Knows a<br>dog lover</div>
+                    <div class="preview-square" data-square-id="1" role="button" tabindex="0" aria-pressed="false">Speaks<br>3+ languages</div>
+                    <div class="preview-square" data-square-id="2" role="button" tabindex="0" aria-pressed="false">Loves<br>hiking</div>
+                    <div class="preview-square" data-square-id="3" role="button" tabindex="0" aria-pressed="false">Has a<br>twin</div>
+                    <div class="preview-square free-space">FREE SPACE</div>
+                    <div class="preview-square" data-square-id="4" role="button" tabindex="0" aria-pressed="false">Born<br>outside US</div>
+                    <div class="preview-square" data-square-id="5" role="button" tabindex="0" aria-pressed="false">Skis or<br>snowboards</div>
+                    <div class="preview-square" data-square-id="6" role="button" tabindex="0" aria-pressed="false">Vegetarian</div>
+                    <div class="preview-square" data-square-id="7" role="button" tabindex="0" aria-pressed="false">Can code<br>in 2+ languages</div>
+                </div>
+            </div>
+
+            <p class="preview-instructions animate-entrance animation-delay-450">
+                Notice how squares highlight when tapped? That's how the game works!
+            </p>
+            <p class="sr-only" id="preview-board-status" aria-live="polite"></p>
+        </section>
+
+        <section class="cta-section animate-entrance animation-delay-500">
+            <h2>Ready to play for real?</h2>
+            <p>Gather a group and start a game!</p>
+            <button
+                hx-post="/start"
+                hx-target="#game-container"
+                hx-swap="outerHTML"
+                class="cta-button">
+                Start Game
+            </button>
+        </section>
     </div>
-</div>
+    <script>
+    (function () {
+        const scriptEl = document.currentScript;
+        const root = (scriptEl && scriptEl.closest("#game-container")) || document.getElementById("game-container");
+        if (!root) {
+            return;
+        }
+        if (root.__previewBound) {
+            return;
+        }
+        root.__previewBound = true;
+
+        const status = root.querySelector("#preview-board-status");
+        const toggleSquare = (square) => {
+            const isMarked = square.classList.toggle("marked");
+            square.setAttribute("aria-pressed", String(isMarked));
+            if (status) {
+                const label = square.textContent.replace(/\s+/g, " ").trim();
+                status.textContent = isMarked
+                    ? `${label} marked in preview board.`
+                    : `${label} unmarked in preview board.`;
+            }
+        };
+
+        root.querySelectorAll(".preview-square:not(.free-space)").forEach((square) => {
+            square.addEventListener("click", () => {
+                toggleSquare(square);
+            });
+            square.addEventListener("keydown", (event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    toggleSquare(square);
+                }
+            });
+        });
+    })();
+    </script>
 </div>
