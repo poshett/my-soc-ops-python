@@ -6,7 +6,7 @@ body,
 }
 
 body {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: system-ui, -apple-system, sans-serif;
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -162,19 +162,28 @@ button:disabled {
     animation: bounce 0.5s ease-out;
 }
 
-:root {
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.start-screen-shell {
     --bg-top: #0f172a;
     --bg-bottom: #1e293b;
     --panel-bg: rgba(248, 250, 252, 0.96);
     --panel-border: #cbd5e1;
     --text-primary: #0f172a;
     --text-secondary: #475569;
-    --accent: #2563eb;
-}
-
-.start-screen-shell {
     min-height: 100%;
     padding: 2rem 1.25rem;
+    font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
     background:
         radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.22) 0%, transparent 45%),
         radial-gradient(circle at 100% 100%, rgba(37, 99, 235, 0.3) 0%, transparent 48%),
@@ -264,16 +273,25 @@ button:disabled {
     font-size: 0.85rem;
     font-weight: 500;
     color: #2c3e50;
-    cursor: pointer;
+    cursor: default;
     transition: all 150ms ease;
     padding: 12px;
     user-select: none;
     min-height: 80px;
 }
 
+.preview-square[role="button"] {
+    cursor: pointer;
+}
+
 .preview-square:hover {
     border-color: #1e40af;
     background: #f0f9ff;
+}
+
+.preview-square:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.35);
+    outline-offset: 2px;
 }
 
 .preview-square:active {
@@ -414,11 +432,31 @@ button:disabled {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .animate-entrance,
+    .animate-entrance {
+        animation: fadeInLinear 180ms linear forwards;
+        transform: none;
+    }
+
     .preview-square,
     .cta-button {
-        animation: none !important;
-        transition: none !important;
-        transform: none !important;
+        transition: background-color 100ms linear, border-color 100ms linear, color 100ms linear;
+    }
+
+    .preview-square.marked {
+        animation: fadeInLinear 120ms linear;
+    }
+
+    .preview-square:active,
+    .cta-button:active {
+        transform: none;
+    }
+}
+
+@keyframes fadeInLinear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }

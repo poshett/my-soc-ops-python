@@ -18,21 +18,22 @@
 
             <div class="preview-board-container animate-entrance animation-delay-400">
                 <div class="preview-board" aria-label="Interactive bingo board preview">
-                    <div class="preview-square" data-square-id="0">Know a<br>dog lover</div>
-                    <div class="preview-square" data-square-id="1">Speaks<br>3+ languages</div>
-                    <div class="preview-square" data-square-id="2">Loves<br>hiking</div>
-                    <div class="preview-square" data-square-id="3">Has a<br>twin</div>
+                    <div class="preview-square" data-square-id="0" role="button" tabindex="0" aria-pressed="false">Knows a<br>dog lover</div>
+                    <div class="preview-square" data-square-id="1" role="button" tabindex="0" aria-pressed="false">Speaks<br>3+ languages</div>
+                    <div class="preview-square" data-square-id="2" role="button" tabindex="0" aria-pressed="false">Loves<br>hiking</div>
+                    <div class="preview-square" data-square-id="3" role="button" tabindex="0" aria-pressed="false">Has a<br>twin</div>
                     <div class="preview-square free-space">FREE SPACE</div>
-                    <div class="preview-square" data-square-id="4">Born<br>outside US</div>
-                    <div class="preview-square" data-square-id="5">Skis or<br>snowboards</div>
-                    <div class="preview-square" data-square-id="6">Vegetarian</div>
-                    <div class="preview-square" data-square-id="7">Can code<br>in 2+ languages</div>
+                    <div class="preview-square" data-square-id="4" role="button" tabindex="0" aria-pressed="false">Born<br>outside US</div>
+                    <div class="preview-square" data-square-id="5" role="button" tabindex="0" aria-pressed="false">Skis or<br>snowboards</div>
+                    <div class="preview-square" data-square-id="6" role="button" tabindex="0" aria-pressed="false">Vegetarian</div>
+                    <div class="preview-square" data-square-id="7" role="button" tabindex="0" aria-pressed="false">Can code<br>in 2+ languages</div>
                 </div>
             </div>
 
             <p class="preview-instructions animate-entrance animation-delay-450">
                 Notice how squares highlight when tapped? That's how the game works!
             </p>
+            <p class="sr-only" id="preview-board-status" aria-live="polite"></p>
         </section>
 
         <section class="cta-section animate-entrance animation-delay-500">
@@ -49,14 +50,37 @@
     </div>
     <script>
     (function () {
-        const root = document.currentScript.closest("#game-container");
-        root.querySelectorAll(".preview-square:not(.free-space)").forEach((square) => {
-            if (square.dataset.previewBound === "true") {
-                return;
+        const scriptEl = document.currentScript;
+        const root = (scriptEl && scriptEl.closest("#game-container")) || document.getElementById("game-container");
+        if (!root) {
+            return;
+        }
+        if (root.__previewBound) {
+            return;
+        }
+        root.__previewBound = true;
+
+        const status = root.querySelector("#preview-board-status");
+        const toggleSquare = (square) => {
+            const isMarked = square.classList.toggle("marked");
+            square.setAttribute("aria-pressed", String(isMarked));
+            if (status) {
+                const label = square.textContent.replace(/\s+/g, " ").trim();
+                status.textContent = isMarked
+                    ? `${label} marked in preview board.`
+                    : `${label} unmarked in preview board.`;
             }
-            square.dataset.previewBound = "true";
+        };
+
+        root.querySelectorAll(".preview-square:not(.free-space)").forEach((square) => {
             square.addEventListener("click", () => {
-                square.classList.toggle("marked");
+                toggleSquare(square);
+            });
+            square.addEventListener("keydown", (event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    toggleSquare(square);
+                }
             });
         });
     })();
