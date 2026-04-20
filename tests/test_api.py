@@ -20,6 +20,12 @@ class TestHomePage:
         assert "Start Game" in response.text
         assert "How to play" in response.text
 
+    def test_home_uses_updated_start_screen_styling(self, client: TestClient):
+        response = client.get("/")
+        assert "animate-entrance" in response.text
+        assert "py-5 px-10" in response.text
+        assert "JetBrains+Mono" in response.text
+
     def test_home_sets_session_cookie(self, client: TestClient):
         response = client.get("/")
         assert "session" in response.cookies
