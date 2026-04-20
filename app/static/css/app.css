@@ -19,7 +19,7 @@ body,
 }
 
 body {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
     -webkit-tap-highlight-color: transparent;
     color: var(--color-text-dark);
     background: linear-gradient(135deg, var(--color-bg-subtle) 0%, var(--color-bg-gradient-end) 100%);
