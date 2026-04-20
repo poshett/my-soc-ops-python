@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap');
-
 :root {
     --color-primary: #1e40af;
     --color-primary-light: #2563eb;
     --color-success: #558b2f;
     --color-highlight: #8b6914;
     --color-text-dark: #2c3e50;
+    --color-text-emphasis: #233649;
     --color-text-muted: #5a6a7a;
     --color-bg-subtle: #f7f9fc;
     --color-bg-gradient-end: #e8f1ff;
@@ -83,10 +82,10 @@ body {
 .text-gray-600 { color: var(--color-text-muted); }
 .text-gray-700 { color: #374151; }
 .text-gray-800 { color: var(--color-text-dark); }
-.text-gray-900 { color: var(--color-text-dark); }
+.text-gray-900 { color: var(--color-text-emphasis); }
 .text-green-600 { color: var(--color-success); }
 .text-green-800 { color: #3f6724; }
-.text-amber-500 { color: var(--color-highlight); }
+.text-amber-500 { color: #b08a2e; }
 .text-amber-800 { color: #6f5510; }
 .text-amber-900 { color: #5a450c; }
 
