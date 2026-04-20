@@ -1,25 +1,61 @@
-<div id="game-container">
-<div class="flex flex-col items-center justify-center min-h-full p-6 bg-gray-50">
-    <div class="text-center max-w-sm">
-        <h1 class="text-4xl font-bold text-gray-900 mb-2">Soc Ops</h1>
-        <p class="text-lg text-gray-600 mb-8">Social Bingo</p>
+<div id="game-container" class="landing-page">
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <h1 class="hero-title animate-entrance">Soc Ops</h1>
+                <p class="hero-subtitle animate-entrance animation-delay-100">Social Bingo</p>
+                <p class="hero-tagline animate-entrance animation-delay-200">
+                    Connect with people around you. Answer fun questions. Get five in a row. Win.
+                </p>
+            </div>
+        </section>
 
-        <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200 mb-8">
-            <h2 class="font-semibold text-gray-800 mb-3">How to play</h2>
-            <ul class="text-left text-gray-600 text-sm space-y-2">
-                <li>• Find people who match the questions</li>
-                <li>• Tap a square when you find a match</li>
-                <li>• Get 5 in a row to win!</li>
-            </ul>
-        </div>
+        <section class="content-section" aria-label="Game overview">
+            <div class="value-prop-grid">
+                <article class="value-item animate-entrance animation-delay-300">
+                    <h3>What is it?</h3>
+                    <p>Social bingo—a game to connect people at events via questions.</p>
+                </article>
+                <article class="value-item animate-entrance animation-delay-350">
+                    <h3>Why Bingo?</h3>
+                    <p>Bingo is familiar, engaging, and fun. Perfect for breaking the ice.</p>
+                </article>
+                <article class="value-item animate-entrance animation-delay-400">
+                    <h3>Perfect for...</h3>
+                    <p>Student mixers. Networking events. Team building. Community gatherings.</p>
+                </article>
+            </div>
+        </section>
 
-        <button
-            hx-post="/start"
-            hx-target="#game-container"
-            hx-swap="outerHTML"
-            class="w-full bg-accent text-white font-semibold py-4 px-8 rounded-lg text-lg active:bg-accent-light transition-colors">
-            Start Game
-        </button>
-    </div>
-</div>
+        <section class="content-section" aria-label="How to play">
+            <div class="how-to-steps">
+                <article class="step-item animate-entrance animation-delay-500">
+                    <span class="step-number" aria-hidden="true">①</span>
+                    <h3>Find People</h3>
+                    <p>Read questions on your card. Find people who match them.</p>
+                </article>
+                <article class="step-item animate-entrance animation-delay-600">
+                    <span class="step-number" aria-hidden="true">②</span>
+                    <h3>Tap a Square</h3>
+                    <p>When you find someone matching a question, tap their square.</p>
+                </article>
+                <article class="step-item animate-entrance animation-delay-700">
+                    <span class="step-number" aria-hidden="true">③</span>
+                    <h3>Get Bingo</h3>
+                    <p>Connect 5 in a row (horizontal, vertical, or diagonal). You win!</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <p class="animate-entrance animation-delay-800">Ready to break the ice and win some Bingo?</p>
+            <button
+                hx-post="/start"
+                hx-target="#game-container"
+                hx-swap="outerHTML"
+                class="cta-button animate-entrance animation-delay-800">
+                Start Game
+            </button>
+        </section>
+    </main>
 </div>
